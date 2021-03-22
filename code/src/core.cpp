@@ -21,7 +21,9 @@ bool Ecore::run()
 				  << "\n";
 		std::string fixed_equation = Einput::simplify(equation);
 		std::cout << "Fixed equation is: " << fixed_equation << "\n";
-		Ecore::main_solve(fixed_equation, 1);
+		std::cout << "For x = 1 y = " << Ecore::main_solve(fixed_equation, 1) <<"\n";
+		std::cout << "For x = 2 y = " << Ecore::main_solve(fixed_equation, 2) <<"\n";
+		std::cout << "For x = 3 y = " << Ecore::main_solve(fixed_equation, 3) <<"\n";
 	}
 
 	return 0;
@@ -199,5 +201,5 @@ double Ecore::main_solve(const std::string &str, int x)
 	std::cout << "After substituting x: ";
 	std::cout << s << "\n";
 
-	Ecore::solve_simple(str, number, operation);
+	return Ecore::solve_simple(s, number, operation);
 }
