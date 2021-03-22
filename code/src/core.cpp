@@ -19,12 +19,14 @@ bool Ecore::run()
 	{
 		std::cout << "Valid equation"
 				  << "\n";
+		std::string fixed_equation = Einput::simplify(equation);
+		std::cout << "Fixed equation is: " << fixed_equation << "\n";
+		Ecore::main_solve(fixed_equation, 1);
 	}
-	std::string fixed_equation = Einput::simplify(equation);
-	std::cout << "Fixed equation is: " << fixed_equation << "\n";
-	Ecore::main_solve(fixed_equation, 1);
+
 	return 0;
 }
+
 int Ecore::get_ending_bracket(const std::string &s, int start)
 {
 	unsigned long int i = start + 1;
@@ -96,8 +98,8 @@ double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &num
 	{
 		if (s[i] == '(')
 		{
-			std::string s_substr = s.substr(i + 1, Ecore::get_ending_bracket(s, i));
-			double result = Ecore::solve_simple(s_substr, numbers, operators);
+			std::string s_substr = s.substr(i + 1, (Ecore::get_ending_bracket(s, i) - 1));
+			int result = (int)Ecore::solve_simple(s_substr, numbers, operators);
 			std::string s_result = std::to_string(result);
 			int until_brac = Ecore::get_ending_bracket(s, i) - i;
 			s.erase(i, until_brac);
@@ -109,22 +111,66 @@ double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &num
 	{
 		if (s[i] == '^')
 		{
-			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators); 
+			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 			//might be changed to something more precise
 			int result = (int)std::round(pow(packet.first.first, packet.first.second));
 
 			s.erase(packet.second.first, (packet.second.second - packet.second.first));
 			s.insert(packet.second.first, std::to_string(result));
-			
-			std::cout << s << "\n";
-
 		}
 	}
 	//dividing multipliing second
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (s[i] == '*')
+		{
+			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
+			//might be changed to something more precise
+			int result = (int)std::round(packet.first.first * packet.first.second);
 
+			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.insert(packet.second.first, std::to_string(result));
+		}
+	}
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (s[i] == '/')
+		{
+			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
+			//might be changed to something more precise
+			int result = (int)std::round(packet.first.first / packet.first.second);
+
+			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.insert(packet.second.first, std::to_string(result));
+		}
+	}
 	//adding substracting last
+	//dividing multipliing second
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (s[i] == '+')
+		{
+			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
+			//might be changed to something more precise
+			int result = (int)std::round(packet.first.first + packet.first.second);
 
-	return 0;
+			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.insert(packet.second.first, std::to_string(result));
+		}
+	}
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (s[i] == '-')
+		{
+			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
+			//might be changed to something more precise
+			int result = (int)std::round(packet.first.first - packet.first.second);
+
+			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.insert(packet.second.first, std::to_string(result));
+		}
+	}
+	return std::stod(s);
 }
 
 double Ecore::main_solve(const std::string &str, int x)
