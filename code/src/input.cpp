@@ -111,6 +111,9 @@ std::string Einput::simplify(const std::string &str)
 
 	for (int i = 0; i < s.size(); i++)
 	{
+		//all commas to dots
+		if (s[i] == ',')
+			s[i] = '.';
 
 		//3x -----> 3*x
 		if (number.find(s[i]) != number.end()) //if a number
@@ -122,7 +125,7 @@ std::string Einput::simplify(const std::string &str)
 		if (s[i] == ')' && number.find(s[i + 1]) != number.end())
 			s.insert(i + 1, "*");
 
-		//2(2+1) ------> 2(2+1)
+		//2(2+1) ------> 2*(2+1)
 		if (s[i + 1] == '(' && number.find(s[i]) != number.end())
 			s.insert(i + 1, "*");
 	}
