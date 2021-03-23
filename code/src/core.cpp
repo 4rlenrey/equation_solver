@@ -33,7 +33,7 @@ int Ecore::get_ending_bracket(const std::string &s, int start)
 {
 	unsigned long int i = start + 1;
 	int indention_level = 1;
-	while (i < s.size())
+	while (i <= s.size())
 	{
 		switch (s[i])
 		{
@@ -96,15 +96,16 @@ std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(cons
 double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &numbers, std::unordered_set<char> &operators)
 {
 	std::string s = str;
+
 	for (int i = 0; i < s.size(); i++) //recursion for all the (())(())
 	{
 		if (s[i] == '(')
 		{
-			std::string s_substr = s.substr(i + 1, (Ecore::get_ending_bracket(s, i) - 1));
+			std::string s_substr = s.substr(i+1, (Ecore::get_ending_bracket(s, i)-3));
 			int result = (int)Ecore::solve_simple(s_substr, numbers, operators);
 			std::string s_result = std::to_string(result);
 			int until_brac = Ecore::get_ending_bracket(s, i) - i;
-			s.erase(i, until_brac);
+			s.erase(i, until_brac+1);
 			s.insert(i, s_result);
 		}
 	}
