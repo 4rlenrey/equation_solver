@@ -21,13 +21,43 @@ bool Ecore::run()
 				  << "\n";
 		std::string fixed_equation = Einput::simplify(equation);
 		std::cout << "Fixed equation is: " << fixed_equation << "\n";
-		std::cout << "For x = 1 y = " << Ecore::main_solve(fixed_equation, 1) <<"\n";
-		std::cout << "For x = 2 y = " << Ecore::main_solve(fixed_equation, 2) <<"\n";
-		std::cout << "For x = 3 y = " << Ecore::main_solve(fixed_equation, 3) <<"\n";
+		//for first few points
+		int x = 2;
+		for(int i = 1; i < x; i++)
+		{
+		std::cout << "x = " << i << " y = " << Ecore::main_solve(fixed_equation, i) <<"\n";
+		}
 	}
 
 	return 0;
 }
+
+double Ecore::main_solve(const std::string &str, int x)
+{
+	std::string s = str;
+	std::string a_numbers = "123456789,.x-";
+	std::string a_operations = "*^-+";
+	std::unordered_set<char> number;
+	std::unordered_set<char> operation;
+
+	for (const char &i : a_numbers)
+		number.insert(i);
+	for (const char &i : a_operations)
+		operation.insert(i);
+
+	std::string s_x = std::to_string(x);
+
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (s[i] == 'x')
+		{
+			s.erase(i, 1);
+			s.insert(i, s_x);
+		}
+	}
+	return Ecore::solve_simple(s, number, operation);
+}
+
 
 int Ecore::get_ending_bracket(const std::string &s, int start)
 {
@@ -53,7 +83,6 @@ int Ecore::get_ending_bracket(const std::string &s, int start)
 	}
 	return 0;
 }
-
 //first number, second number, start (to replace), end (to replace)
 std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(const std::string &s, int i, std::unordered_set<char> &numbers, std::unordered_set<char> &operators)
 {
@@ -95,8 +124,8 @@ std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(cons
 
 double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &numbers, std::unordered_set<char> &operators)
 {
-	std::string s = str;
 
+	std::string s = str;
 	for (int i = 0; i < s.size(); i++) //recursion for all the (())(())
 	{
 		if (s[i] == '(')
@@ -117,8 +146,7 @@ double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &num
 			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 			//might be changed to something more precise
 			int result = (int)std::round(pow(packet.first.first, packet.first.second));
-
-			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.erase(packet.second.first, (packet.second.second - packet.second.first)+1);
 			s.insert(packet.second.first, std::to_string(result));
 		}
 	}
@@ -130,8 +158,7 @@ double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &num
 			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 			//might be changed to something more precise
 			int result = (int)std::round(packet.first.first * packet.first.second);
-
-			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.erase(packet.second.first, (packet.second.second - packet.second.first)+1);
 			s.insert(packet.second.first, std::to_string(result));
 		}
 	}
@@ -143,7 +170,7 @@ double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &num
 			//might be changed to something more precise
 			int result = (int)std::round(packet.first.first / packet.first.second);
 
-			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.erase(packet.second.first, (packet.second.second - packet.second.first)+1);
 			s.insert(packet.second.first, std::to_string(result));
 		}
 	}
@@ -157,7 +184,7 @@ double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &num
 			//might be changed to something more precise
 			int result = (int)std::round(packet.first.first + packet.first.second);
 
-			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.erase(packet.second.first, (packet.second.second - packet.second.first)+1);
 			s.insert(packet.second.first, std::to_string(result));
 		}
 	}
@@ -169,38 +196,10 @@ double Ecore::solve_simple(const std::string &str, std::unordered_set<char> &num
 			//might be changed to something more precise
 			int result = (int)std::round(packet.first.first - packet.first.second);
 
-			s.erase(packet.second.first, (packet.second.second - packet.second.first));
+			s.erase(packet.second.first, (packet.second.second - packet.second.first)+1);
 			s.insert(packet.second.first, std::to_string(result));
 		}
 	}
+
 	return std::stod(s);
-}
-
-double Ecore::main_solve(const std::string &str, int x)
-{
-	std::string s = str;
-	std::string a_numbers = "123456789,.x-";
-	std::string a_operations = "*^-+";
-	std::unordered_set<char> number;
-	std::unordered_set<char> operation;
-
-	for (const char &i : a_numbers)
-		number.insert(i);
-	for (const char &i : a_operations)
-		operation.insert(i);
-
-	std::string s_x = std::to_string(x);
-
-	for (int i = 0; i < s.size(); i++)
-	{
-		if (s[i] == 'x')
-		{
-			s.erase(i, 1);
-			s.insert(i, s_x);
-		}
-	}
-	std::cout << "After substituting x: ";
-	std::cout << s << "\n";
-
-	return Ecore::solve_simple(s, number, operation);
 }

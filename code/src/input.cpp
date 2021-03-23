@@ -76,6 +76,19 @@ bool Einput::validate(const std::string &s)
 
 	return 1;
 }
+bool Einput::fix_brackets(std::string &s)
+{
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (s[i] == '(' && s[i + 1] == ')')
+		{
+			s.erase(i, 2);
+			//improve later
+			i = -1;
+		}
+	}
+	return 1;
+}
 
 std::string Einput::simplify(const std::string &str)
 {
@@ -91,11 +104,13 @@ std::string Einput::simplify(const std::string &str)
 	for (const char &i : a_operations)
 		operation.insert(i);
 
+	if (Einput::fix_brackets(s))
+	{
+		std::cout << "Fixed brackets succesfully \n";
+	}
+
 	for (int i = 0; i < s.size(); i++)
 	{
-		//deletes '()'
-		if (s[i] == '(' && s[i + 1] == ')')
-			s.erase(i, 2);
 
 		//3x -----> 3*x
 		if (number.find(s[i]) != number.end()) //if a number
