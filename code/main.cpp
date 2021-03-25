@@ -1,8 +1,9 @@
-#include <iostream>
 #include "include/core.h"
+#include "include/testing.h"
 
 int main()
 {
-	Ecore::run();
+	Etesting::base();
+	//Ecore::run();
 	return 0;
 }
