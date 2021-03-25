@@ -35,8 +35,8 @@ bool Ecore::run()
 std::string Ecore::main_solve(const std::string &str, int x)
 {
 	std::string s = str;
-	std::string a_numbers = "123456789,.x";
-	std::string a_operations = "*^-+";
+	std::string a_numbers = "01234567890,.x";
+	std::string a_operations = "*^/-+";
 	std::unordered_set<char> number;
 	std::unordered_set<char> operation;
 
@@ -98,6 +98,13 @@ std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(cons
 			break;
 		}
 	}
+	if (start_num > 0)
+	{
+		if (s[start_num - 1] == '-')
+		{
+			start_num--;
+		}
+	}
 	std::string s_first_d = s.substr(start_num, koniec_num);
 
 	int replace_index_start = start_num; //replace starts with the left number
@@ -105,6 +112,10 @@ std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(cons
 	start_num = i + 1;
 	koniec_num = s.size();
 
+	if (s[i + 1] == '-')
+	{
+		i++;
+	}
 	for (int j = i + 1; j <= s.size(); j++)
 	{
 		if (numbers.find(s[j]) == numbers.end())
@@ -168,17 +179,9 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 		{
 			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 			//might be changed to something more precise
-			if ((int)packet.first.second != 0)
-			{
-				int result = (int)std::round(packet.first.first / packet.first.second);
-				s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
-				s.insert(packet.second.first, std::to_string(result));
-			}
-			else
-			{
-				std::cout << "can't divide by 0 \n";
-				return 0;
-			}
+			int result = (int)std::round(packet.first.first / packet.first.second);
+			s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
+			s.insert(packet.second.first, std::to_string(result));
 		}
 	}
 	//adding substracting last
@@ -190,12 +193,11 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 			//might be changed to something more precise
 			int result = (int)std::round(packet.first.first + packet.first.second);
-
 			s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
 			s.insert(packet.second.first, std::to_string(result));
 		}
 	}
-	for (int i = 0; i < s.size(); i++)
+	for (int i = 1; i < s.size(); i++)
 	{
 		if (s[i] == '-')
 		{
@@ -207,6 +209,6 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 			s.insert(packet.second.first, std::to_string(result));
 		}
 	}
-
+	//std::cout << s << " Works  \n";
 	return s;
 }

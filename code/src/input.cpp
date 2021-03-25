@@ -33,7 +33,7 @@ bool Einput::validate_brackets(const std::string &s)
 
 bool Einput::validate_characters(const std::string &s)
 {
-	std::string allowed_ch = "123456789,.()*^-+x"; //allowed characters //later need to add %!
+	std::string allowed_ch = "0123456789,.()*^-+x/"; //allowed characters //later need to add %!
 	std::unordered_set<char> allowed;
 	for (const char &i : allowed_ch)
 	{ //parse all allowed characters to set
@@ -94,8 +94,8 @@ std::string Einput::simplify(const std::string &str)
 {
 	std::string s = str;
 
-	std::string a_numbers = "123456789,.x";
-	std::string a_operations = "*^-+";
+	std::string a_numbers = "0123456789,.x";
+	std::string a_operations = "*^-+/";
 	std::unordered_set<char> number;
 	std::unordered_set<char> operation;
 
@@ -118,8 +118,6 @@ std::string Einput::simplify(const std::string &str)
 		//3x -----> 3*x
 		if (number.find(s[i]) != number.end()) //if a number
 			if (s[i + 1] == 'x')
-				s.insert(i + 1, "*");
-			else if (s[i + 1] == '-' && s[i + 2] == 'x')
 				s.insert(i + 1, "*");
 		//(2+1)2 ------> (2+1)*2
 		if (s[i] == ')' && number.find(s[i + 1]) != number.end())
