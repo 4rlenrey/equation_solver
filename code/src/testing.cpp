@@ -22,7 +22,7 @@ bool Etesting::base()
 	{
 		if (Ecore::main_solve(test_cases[i].first, 1) != test_cases[i].second)
 		{
-			std::cout << "Test #" << i << " Failed! ";
+			std::cout << "Test #" << i << " Failed! \n";
 			std::cout << Ecore::main_solve(test_cases[i].first, 1) << " != " << test_cases[i].second << "\n";
 		}
 		else
@@ -42,7 +42,7 @@ bool Etesting::bracket()
 	TEST_CONTAINER;
 
 	ADD_TEST_CASE(PAIR("((3(4)3(3423)))", "13"));
-	ADD_TEST_CASE(PAIR("((()()(())()()))", "14"));
+	ADD_TEST_CASE(PAIR("((()()(())()()))()()()", "14"));
 
 	ALL_TESTS
 	{
@@ -56,3 +56,4 @@ bool Etesting::bracket()
 	}
 	return passed;
 }
+

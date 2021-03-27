@@ -131,6 +131,7 @@ std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(cons
 std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char> &numbers, std::unordered_set<char> &operators)
 {
 
+	std::vector<char> operations_av = {'^', '*', '/', '+', '-'};
 	std::string s = str;
 	for (int i = 0; i < s.size(); i++) //recursion for all the (())(())
 	{
@@ -138,14 +139,12 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 		{
 			std::string s_substr = s.substr(i + 1, (Ecore::get_ending_bracket(s, i) - 3));
 			std::string result = Ecore::solve_simple(s_substr, numbers, operators);
-			std::string s_result = result;
 			int until_brac = Ecore::get_ending_bracket(s, i) - i;
 			s.erase(i, until_brac + 1);
-			s.insert(i, s_result);
+			s.insert(i, result);
+		
 		}
 	}
-	std::vector<char> operations_av = {'^', '*', '/', '+', '-'};
-
 	for (const char operat : operations_av)
 	{
 		for (int i = 0; i < s.size(); i++)
@@ -156,6 +155,9 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 				//might be changed to something more precise
 				//operations order be gut
+
+				//std::cout << "Operation: " << operat << " Numbers: " << packet.first.first << " " << packet.first.second << "\n";
+
 				switch (operat)
 				{
 				case '^':
@@ -176,11 +178,11 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				default:
 					break;
 				}
-				s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
+				//something doesnt work here 
+				s.erase(packet.second.first, (packet.second.second - packet.second.first) -1);
 				s.insert(packet.second.first, std::to_string(result));
 			}
 		}
 	}
-	//std::cout << s << " Works  \n";
 	return s;
 }

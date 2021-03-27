@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unordered_set>
 #include <vector>
+
 namespace Ecore{
 	std::string get_input();
 	bool run();
