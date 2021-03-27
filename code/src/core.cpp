@@ -144,64 +144,41 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 			s.insert(i, s_result);
 		}
 	}
-	//pow is first
-	for (int i = 0; i < s.size(); i++)
-	{
-		if (s[i] == '^')
-		{
-			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
-			//might be changed to something more precise
-			int result = (int)std::round(pow(packet.first.first, packet.first.second));
-			s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
-			s.insert(packet.second.first, std::to_string(result));
-		}
-	}
-	//dividing multipliing second
-	for (int i = 0; i < s.size(); i++)
-	{
-		if (s[i] == '*')
-		{
-			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
-			//might be changed to something more precise
-			int result = (int)std::round(packet.first.first * packet.first.second);
-			s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
-			s.insert(packet.second.first, std::to_string(result));
-		}
-	}
-	for (int i = 0; i < s.size(); i++)
-	{
-		if (s[i] == '/')
-		{
-			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
-			//might be changed to something more precise
-			int result = (int)std::round(packet.first.first / packet.first.second);
-			s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
-			s.insert(packet.second.first, std::to_string(result));
-		}
-	}
-	//adding substracting last
-	//dividing multipliing second
-	for (int i = 0; i < s.size(); i++)
-	{
-		if (s[i] == '+')
-		{
-			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
-			//might be changed to something more precise
-			int result = (int)std::round(packet.first.first + packet.first.second);
-			s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
-			s.insert(packet.second.first, std::to_string(result));
-		}
-	}
-	for (int i = 1; i < s.size(); i++)
-	{
-		if (s[i] == '-')
-		{
-			std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
-			//might be changed to something more precise
-			int result = (int)std::round(packet.first.first - packet.first.second);
+	std::vector<char> operations_av = {'^', '*', '/', '+', '-'};
 
-			s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
-			s.insert(packet.second.first, std::to_string(result));
+	for (const char operat : operations_av)
+	{
+		for (int i = 0; i < s.size(); i++)
+		{
+			if (s[i] == operat)
+			{
+				int result = 1;
+				std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
+				//might be changed to something more precise
+				//operations order be gut
+				switch (operat)
+				{
+				case '^':
+					result = (int)std::round(pow(packet.first.first, packet.first.second));
+					break;
+				case '*':
+					result = (int)std::round(packet.first.first * packet.first.second);
+					break;
+				case '/':
+					result = (int)std::round(packet.first.first / packet.first.second);
+					break;
+				case '+':
+					result = (int)std::round(packet.first.first + packet.first.second);
+					break;
+				case '-':
+					result = (int)std::round(packet.first.first - packet.first.second);
+					break;
+				default:
+					break;
+				}
+				s.erase(packet.second.first, (packet.second.second - packet.second.first) + 1);
+				s.insert(packet.second.first, std::to_string(result));
+			}
 		}
 	}
 	//std::cout << s << " Works  \n";

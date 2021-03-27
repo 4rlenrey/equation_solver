@@ -7,4 +7,5 @@
 namespace Etesting
 {
 	bool base();
+	bool bracket();
 }
