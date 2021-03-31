@@ -3,7 +3,7 @@
 
 int main()
 {
-	Etesting::base();
-	//Ecore::run();
+	//Etesting::base();
+	Ecore::run();
 	return 0;
 }

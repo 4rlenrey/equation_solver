@@ -137,26 +137,23 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 	{
 		if (s[i] == '(')
 		{
-			std::string s_substr = s.substr(i + 1, (Ecore::get_ending_bracket(s, i) - 3));
-			std::string result = Ecore::solve_simple(s_substr, numbers, operators);
 			int until_brac = Ecore::get_ending_bracket(s, i) - i;
-			s.erase(i, until_brac + 1);
-			s.insert(i, result);
-		
+			std::string s_substr = s.substr(i + 1, until_brac - 1);
+			std::string result = Ecore::solve_simple(s_substr, numbers, operators);
+			s.replace(i, until_brac + 1, result);
 		}
 	}
 	for (const char operat : operations_av)
 	{
 		for (int i = 0; i < s.size(); i++)
 		{
+
 			if (s[i] == operat)
 			{
 				int result = 1;
 				std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 				//might be changed to something more precise
 				//operations order be gut
-
-				//std::cout << "Operation: " << operat << " Numbers: " << packet.first.first << " " << packet.first.second << "\n";
 
 				switch (operat)
 				{
@@ -178,10 +175,11 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				default:
 					break;
 				}
-				//something doesnt work here 
-				s.erase(packet.second.first, (packet.second.second - packet.second.first) -1);
-				s.insert(packet.second.first, std::to_string(result));
+				s.replace(packet.second.first, (packet.second.second - packet.second.first) - 1, std::to_string(result));
+				i = packet.second.first;
+				//std::cout << "Operation: " << operat << " Numbers: " << packet.first.first << " " << packet.first.second << "\n";
 			}
+
 		}
 	}
 	return s;

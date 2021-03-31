@@ -20,10 +20,12 @@ bool Etesting::base()
 
 	ALL_TESTS
 	{
-		if (Ecore::main_solve(test_cases[i].first, 1) != test_cases[i].second)
+		std::string sss = Ecore::main_solve(test_cases[i].first, 1);
+
+		if (sss != test_cases[i].second)
 		{
 			std::cout << "Test #" << i << " Failed! \n";
-			std::cout << Ecore::main_solve(test_cases[i].first, 1) << " != " << test_cases[i].second << "\n";
+			std::cout << sss << " != " << test_cases[i].second << "\n";
 		}
 		else
 		{
@@ -31,7 +33,7 @@ bool Etesting::base()
 		}
 	}
 
-	Etesting::bracket();
+	//Etesting::bracket();
 
 	return passed;
 }
@@ -56,4 +58,3 @@ bool Etesting::bracket()
 	}
 	return passed;
 }
-
