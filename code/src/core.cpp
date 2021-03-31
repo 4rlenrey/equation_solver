@@ -9,13 +9,14 @@ std::string Ecore::get_input()
 
 bool Ecore::run()
 {
-	std::string equation = "2*(x-4)"; //Ecore::get_input();
+	std::string equation = Ecore::get_input();
 	if (Einput::validate(equation))
 	{
 		std::cout << "Valid equation"
 				  << "\n";
 		std::string fixed_equation = Einput::simplify(equation);
 		std::cout << "Fixed equation is: " << fixed_equation << "\n";
+
 		//for first few points
 		int x = 4;
 		for (int i = -4; i < x; i++)
@@ -140,7 +141,10 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 			int until_brac = Ecore::get_ending_bracket(s, i) - i;
 			std::string s_substr = s.substr(i + 1, until_brac - 1);
 			std::string result = Ecore::solve_simple(s_substr, numbers, operators);
-			s.replace(i, until_brac + 1, result);
+			if (result == "NO")
+				return result;
+			else
+				s.replace(i, until_brac + 1, result);
 		}
 	}
 
@@ -165,10 +169,10 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 					result = (int)std::round(packet.first.first * packet.first.second);
 					break;
 				case '/':
-					if (s[i + 1] != '0')
-						result = (int)std::round(packet.first.first / packet.first.second);
+					if (s[i + 1] == '0')
+						return "NO"; //cant divide by zero
 					else
-						return "ERROR! DIVIDING BY ZERO";
+						result = (int)std::round(packet.first.first / packet.first.second);
 					break;
 				case '+':
 					result = (int)std::round(packet.first.first + packet.first.second);
@@ -182,7 +186,6 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				s.replace(packet.second.first, (packet.second.second - packet.second.first) - 1, std::to_string(result));
 				i = packet.second.first;
 				//std::cout << "Operation: " << operat << " Numbers: " << packet.first.first << " " << packet.first.second << "\n";
-
 			}
 		}
 	}
