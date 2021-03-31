@@ -9,7 +9,7 @@ std::string Ecore::get_input()
 
 bool Ecore::run()
 {
-	std::string equation = Ecore::get_input();
+	std::string equation = "2*(x-4)"; //Ecore::get_input();
 	if (Einput::validate(equation))
 	{
 		std::cout << "Valid equation"
@@ -18,7 +18,7 @@ bool Ecore::run()
 		std::cout << "Fixed equation is: " << fixed_equation << "\n";
 		//for first few points
 		int x = 4;
-		for (int i = 0; i < x; i++)
+		for (int i = -4; i < x; i++)
 		{
 			std::cout << "x = " << i << " y = " << Ecore::main_solve(fixed_equation, i) << "\n";
 		}
@@ -132,6 +132,7 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 {
 	std::vector<char> operations_av = {'^', '*', '/', '+', '-'};
 	std::string s = str;
+
 	for (int i = 0; i < s.size(); i++) //recursion for all the (())(())
 	{
 		if (s[i] == '(')
@@ -145,7 +146,7 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 
 	for (const char operat : operations_av)
 	{
-		for (int i = 0; i < s.size(); i++)
+		for (int i = 1; i < s.size(); i++)
 		{
 
 			if (s[i] == operat)
@@ -181,6 +182,7 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				s.replace(packet.second.first, (packet.second.second - packet.second.first) - 1, std::to_string(result));
 				i = packet.second.first;
 				//std::cout << "Operation: " << operat << " Numbers: " << packet.first.first << " " << packet.first.second << "\n";
+
 			}
 		}
 	}
