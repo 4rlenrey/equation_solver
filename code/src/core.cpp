@@ -130,7 +130,6 @@ std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(cons
 
 std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char> &numbers, std::unordered_set<char> &operators)
 {
-
 	std::vector<char> operations_av = {'^', '*', '/', '+', '-'};
 	std::string s = str;
 	for (int i = 0; i < s.size(); i++) //recursion for all the (())(())
@@ -143,6 +142,7 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 			s.replace(i, until_brac + 1, result);
 		}
 	}
+
 	for (const char operat : operations_av)
 	{
 		for (int i = 0; i < s.size(); i++)
@@ -164,7 +164,10 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 					result = (int)std::round(packet.first.first * packet.first.second);
 					break;
 				case '/':
-					result = (int)std::round(packet.first.first / packet.first.second);
+					if (s[i + 1] != '0')
+						result = (int)std::round(packet.first.first / packet.first.second);
+					else
+						return "ERROR! DIVIDING BY ZERO";
 					break;
 				case '+':
 					result = (int)std::round(packet.first.first + packet.first.second);
@@ -179,7 +182,6 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				i = packet.second.first;
 				//std::cout << "Operation: " << operat << " Numbers: " << packet.first.first << " " << packet.first.second << "\n";
 			}
-
 		}
 	}
 	return s;

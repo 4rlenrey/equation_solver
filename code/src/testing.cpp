@@ -17,6 +17,7 @@ bool Etesting::base()
 	ADD_TEST_CASE(PAIR("2*(3*3)-3", "15"));
 	ADD_TEST_CASE(PAIR("2+5-2-5", "0"));
 	ADD_TEST_CASE(PAIR("3*5+5*(3-2)", "20"));
+	ADD_TEST_CASE(PAIR("4*x/2*x", "2"));
 
 	ALL_TESTS
 	{
