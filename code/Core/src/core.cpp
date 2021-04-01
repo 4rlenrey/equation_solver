@@ -1,27 +1,27 @@
-#include "../include/input.h"
+#include"../include/core.h"
 
-std::string Ecore::get_input()
+bool Ecore::run(std::pair<int, int> range, std::string equation)
 {
-	std::string Estring;
-	std::cin >> Estring;
-	return Estring;
-}
-
-bool Ecore::run()
-{
-	std::string equation = Ecore::get_input();
-	if (Einput::validate(equation))
+	if (Evalidate::equation(equation))
 	{
 		std::cout << "Valid equation"
 				  << "\n";
-		std::string fixed_equation = Einput::simplify(equation);
+		std::string fixed_equation = Evalidate::simplify(equation);
 		std::cout << "Fixed equation is: " << fixed_equation << "\n";
 
+		std::string output;
 		//for first few points
-		int z = 4;
-		for (int x = -4; x <= z; x++)
+		for (int x = range.first; x <= range.second; x++)
 		{
-			std::cout << "x = " << x << " y = " << Ecore::main_solve(fixed_equation, x) << "\n";
+			try
+			{
+				output = Ecore::main_solve(fixed_equation, x);
+				std::cout << "x = " << x << " y = " << output << "\n";
+			}
+			catch (const std::exception &e)
+			{
+				std::cerr << "There's an error caused by: " << e.what() << '\n';
+			}
 		}
 	}
 
@@ -155,7 +155,7 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 
 			if (s[i] == operat)
 			{
-				long int result = 1;
+				long long int result = 1;
 				std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 				//might be changed to something more precise
 				//operations order be gut
@@ -163,22 +163,22 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				switch (operat)
 				{
 				case '^':
-					result = (long int)(pow(packet.first.first, packet.first.second));
+					result = (long long int)(pow(packet.first.first, packet.first.second));
 					break;
 				case '*':
-					result = (long int)(packet.first.first * packet.first.second);
+					result = (long long int)(packet.first.first * packet.first.second);
 					break;
 				case '/':
 					if (s[i + 1] == '0')
 						return "#0"; //cant divide by zero
 					else
-						result = (long int)(packet.first.first / packet.first.second);
+						result = (long long int)(packet.first.first / packet.first.second);
 					break;
 				case '+':
-					result = (long int)(packet.first.first + packet.first.second);
+					result = (long long int)(packet.first.first + packet.first.second);
 					break;
 				case '-':
-					result = (long int)(packet.first.first - packet.first.second);
+					result = (long long int)(packet.first.first - packet.first.second);
 					break;
 				default:
 					break;

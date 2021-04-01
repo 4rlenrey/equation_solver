@@ -3,10 +3,11 @@
 #include <iostream>
 #include <unordered_set>
 #include <vector>
+#include "validate.h"
+
 
 namespace Ecore{
-	std::string get_input();
-	bool run();
+	bool run(std::pair<int, int> range, std::string equation);
 	std::string main_solve(const std::string&, int x);
 	std::string solve_simple(const std::string&, std::unordered_set<char>& numbers, std::unordered_set<char>& operators);
 	int get_ending_bracket(const std::string&, int start);

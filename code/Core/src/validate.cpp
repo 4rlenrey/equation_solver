@@ -1,8 +1,8 @@
 #include <iostream>
 #include <unordered_set>
-#include "../include/input.h"
+#include "../include/core.h"
 
-bool Einput::validate_brackets(const std::string &s)
+bool Evalidate::brackets(const std::string &s)
 {
 	unsigned long int i = 0;
 	int indention_level = 0;
@@ -31,7 +31,7 @@ bool Einput::validate_brackets(const std::string &s)
 	return 1;
 }
 
-bool Einput::validate_characters(const std::string &s)
+bool Evalidate::characters(const std::string &s)
 {
 	std::string allowed_ch = "0123456789,.()*^-+x/"; //allowed characters //later need to add %!
 	std::unordered_set<char> allowed;
@@ -49,7 +49,7 @@ bool Einput::validate_characters(const std::string &s)
 	return 1;
 }
 
-bool Einput::validate(const std::string &s)
+bool Evalidate::equation(const std::string &s)
 {
 	unsigned short int lenght = s.length();
 	if (lenght == 0)
@@ -59,14 +59,14 @@ bool Einput::validate(const std::string &s)
 				  << "\n";
 		return 0;
 	}
-	if (!Einput::validate_brackets(s))
+	if (!Evalidate::brackets(s))
 	{
 		std::cerr << "Error! "
 				  << "Can't validate brackets"
 				  << "\n";
 		return 0;
 	}
-	if (!Einput::validate_characters(s))
+	if (!Evalidate::characters(s))
 	{
 		std::cerr << "Error! "
 				  << "Can't validate characters"
@@ -76,7 +76,7 @@ bool Einput::validate(const std::string &s)
 
 	return 1;
 }
-bool Einput::fix_brackets(std::string &s)
+bool Evalidate::fix_brackets(std::string &s)
 {
 	for (int i = 0; i < s.size(); i++)
 	{
@@ -90,7 +90,7 @@ bool Einput::fix_brackets(std::string &s)
 	return 1;
 }
 
-std::string Einput::simplify(const std::string &str)
+std::string Evalidate::simplify(const std::string &str)
 {
 	std::string s = str;
 
@@ -104,7 +104,7 @@ std::string Einput::simplify(const std::string &str)
 	for (const char &i : a_operations)
 		operation.insert(i);
 
-	if (Einput::fix_brackets(s))
+	if (Evalidate::fix_brackets(s))
 	{
 		std::cout << "Fixed brackets succesfully \n";
 	}

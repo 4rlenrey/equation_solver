@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <vector>
-#include "../include/core.h"
+#include "../Core/include/core.h"
 
 namespace Etesting
 {

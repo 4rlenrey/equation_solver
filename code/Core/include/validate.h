@@ -6,10 +6,10 @@
 #include <cmath>
 #include "../include/core.h"
 
-namespace Einput{
-	bool validate(const std::string&);
-	bool validate_brackets(const std::string&);
-	bool validate_characters(const std::string&);
+namespace Evalidate{
+	bool equation(const std::string&);
+	bool brackets(const std::string&);
+	bool characters(const std::string&);
 	std::string simplify(const std::string&);
 	bool fix_brackets(std::string&);
 }
