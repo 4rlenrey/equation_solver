@@ -18,10 +18,10 @@ bool Ecore::run()
 		std::cout << "Fixed equation is: " << fixed_equation << "\n";
 
 		//for first few points
-		int x = 4;
-		for (int i = -4; i < x; i++)
+		int z = 4;
+		for (int x = -4; x <= z; x++)
 		{
-			std::cout << "x = " << i << " y = " << Ecore::main_solve(fixed_equation, i) << "\n";
+			std::cout << "x = " << x << " y = " << Ecore::main_solve(fixed_equation, x) << "\n";
 		}
 	}
 
@@ -155,7 +155,7 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 
 			if (s[i] == operat)
 			{
-				int result = 1;
+				double result = 1;
 				std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 				//might be changed to something more precise
 				//operations order be gut
@@ -163,22 +163,22 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				switch (operat)
 				{
 				case '^':
-					result = (int)std::round(pow(packet.first.first, packet.first.second));
+					result = (double)(pow(packet.first.first, packet.first.second));
 					break;
 				case '*':
-					result = (int)std::round(packet.first.first * packet.first.second);
+					result = (double)(packet.first.first * packet.first.second);
 					break;
 				case '/':
 					if (s[i + 1] == '0')
-						return "NO"; //cant divide by zero
+						return "#0"; //cant divide by zero
 					else
-						result = (int)std::round(packet.first.first / packet.first.second);
+						result = (double)(packet.first.first / packet.first.second);
 					break;
 				case '+':
-					result = (int)std::round(packet.first.first + packet.first.second);
+					result = (double)(packet.first.first + packet.first.second);
 					break;
 				case '-':
-					result = (int)std::round(packet.first.first - packet.first.second);
+					result = (double)(packet.first.first - packet.first.second);
 					break;
 				default:
 					break;

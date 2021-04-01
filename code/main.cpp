@@ -1,7 +1,9 @@
 #include "include/core.h"
 #include "include/testing.h"
 
-//uu TO FIX AAAAAAAAAAAAAaa
+//need to add:
+//!
+//%
 
 int main()
 {
