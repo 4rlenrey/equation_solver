@@ -155,7 +155,7 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 
 			if (s[i] == operat)
 			{
-				double result = 1;
+				long int result = 1;
 				std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
 				//might be changed to something more precise
 				//operations order be gut
@@ -163,22 +163,22 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				switch (operat)
 				{
 				case '^':
-					result = (double)(pow(packet.first.first, packet.first.second));
+					result = (long int)(pow(packet.first.first, packet.first.second));
 					break;
 				case '*':
-					result = (double)(packet.first.first * packet.first.second);
+					result = (long int)(packet.first.first * packet.first.second);
 					break;
 				case '/':
 					if (s[i + 1] == '0')
 						return "#0"; //cant divide by zero
 					else
-						result = (double)(packet.first.first / packet.first.second);
+						result = (long int)(packet.first.first / packet.first.second);
 					break;
 				case '+':
-					result = (double)(packet.first.first + packet.first.second);
+					result = (long int)(packet.first.first + packet.first.second);
 					break;
 				case '-':
-					result = (double)(packet.first.first - packet.first.second);
+					result = (long int)(packet.first.first - packet.first.second);
 					break;
 				default:
 					break;
