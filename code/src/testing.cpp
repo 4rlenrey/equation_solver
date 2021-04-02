@@ -21,7 +21,7 @@ bool Etesting::base()
 
 	ALL_TESTS
 	{
-		std::string sss = Ecore::main_solve(test_cases[i].first, 1);
+		std::string sss = Esolve::main(test_cases[i].first, 1);
 
 		if (sss != test_cases[i].second)
 		{

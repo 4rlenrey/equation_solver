@@ -1,22 +1,21 @@
-#include"../include/core.h"
+#include "../include/core.h"
+
+//need to add:
+//!
+//%
+
 
 bool Ecore::run(std::pair<int, int> range, std::string equation)
 {
 	if (Evalidate::equation(equation))
 	{
-		std::cout << "Valid equation"
-				  << "\n";
 		std::string fixed_equation = Evalidate::simplify(equation);
-		std::cout << "Fixed equation is: " << fixed_equation << "\n";
 
-		std::string output;
-		//for first few points
-		for (int x = range.first; x <= range.second; x++)
+		for (int x = range.first; x <= range.second; x++) //solves all points in range
 		{
 			try
 			{
-				output = Ecore::main_solve(fixed_equation, x);
-				std::cout << "x = " << x << " y = " << output << "\n";
+				std::cout << "x = " << x << " y = " << Esolve::main(fixed_equation, x) << "\n";
 			}
 			catch (const std::exception &e)
 			{
@@ -28,18 +27,13 @@ bool Ecore::run(std::pair<int, int> range, std::string equation)
 	return 0;
 }
 
-std::string Ecore::main_solve(const std::string &str, int x)
+std::string Esolve::main(std::string s, int x)
 {
-	std::string s = str;
 	std::string a_numbers = "01234567890,.x";
-	std::string a_operations = "*^/-+";
-	std::unordered_set<char> number;
-	std::unordered_set<char> operation;
+	std::unordered_set<char> numbers;
 
 	for (const char &i : a_numbers)
-		number.insert(i);
-	for (const char &i : a_operations)
-		operation.insert(i);
+		numbers.insert(i);
 
 	std::string s_x = std::to_string(x);
 
@@ -47,11 +41,11 @@ std::string Ecore::main_solve(const std::string &str, int x)
 	{
 		if (s[i] == 'x')
 		{
-			s.erase(i, 1);
+			s.replace(i, 1, s_x);
 			s.insert(i, s_x);
 		}
 	}
-	return Ecore::solve_simple(s, number, operation);
+	return Esolve::partly(s, numbers);
 }
 
 int Ecore::get_ending_bracket(const std::string &s, int start)
@@ -79,36 +73,35 @@ int Ecore::get_ending_bracket(const std::string &s, int start)
 	return 0;
 }
 //first number, second number, start (to replace), end (to replace)
-std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(const std::string &s, int i, std::unordered_set<char> &numbers, std::unordered_set<char> &operators)
+std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(const std::string &s, int i, std::unordered_set<char> &numbers)
 {
-	//getting the number
-	int start_num = 0;
-	int koniec_num = i;
+	int i_start = 0; //variables helping to get the numbers
+	int i_end = i;
 
 	for (int j = i - 1; j >= 0; j--)
 	{
 
 		if (numbers.find(s[j]) == numbers.end())
 		{
-			start_num = j + 1;
+			i_start = j + 1;
 			break;
 		}
 	}
-	if (start_num > 0)
+	if (i_start > 0)
 	{
-		if (s[start_num - 1] == '-')
+		if (s[i_start - 1] == '-')
 		{
-			start_num--;
+			i_start--;
 		}
 	}
-	std::string s_first_d = s.substr(start_num, koniec_num);
+	std::string first_number = s.substr(i_start, i_end);
 
-	int replace_index_start = start_num; //replace starts with the left number
+	int replace_index_start = i_start; //replace starts with the start of a left number
 
-	start_num = i + 1;
-	koniec_num = s.size();
+	i_start = i + 1;
+	i_end = s.size();
 
-	if (s[i + 1] == '-')
+	if (s[i + 1] == '-') //if second numbers is negative then '-' should be a part of a number
 	{
 		i++;
 	}
@@ -116,51 +109,62 @@ std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(cons
 	{
 		if (numbers.find(s[j]) == numbers.end())
 		{
-			koniec_num = j + 1;
+			i_end = j + 1;
 			break;
 		}
 	}
-	std::string s_second_d = s.substr(start_num, koniec_num);
+	std::string second_number = s.substr(i_start, i_end);
+	double double_first_number;
+	double double_second_number;
+	try
+	{
+		double_first_number = std::stod(first_number);
+		double_second_number = std::stod(second_number);
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << "An error has occured by " << e.what() << "while trying to convert these numbers to double type: ";
+		std::cerr << first_number << " " << second_number << "\n";
+		return std::make_pair(std::make_pair(0, 0), std::make_pair(-1, -1));
+	}
 
-	double first = std::stod(s_first_d);
-	double second = std::stod(s_second_d);
-
-	int replace_index_end = koniec_num; //replace ends with the right number
-	return std::make_pair(std::make_pair(first, second), std::make_pair(replace_index_start, replace_index_end));
+	int replace_index_end = i_end; //replace ends with the right number
+	return std::make_pair(std::make_pair(double_first_number, double_second_number), std::make_pair(replace_index_start, replace_index_end));
 }
 
-std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char> &numbers, std::unordered_set<char> &operators)
+std::string Esolve::partly(std::string s, std::unordered_set<char> &numbers)
 {
 	std::vector<char> operations_av = {'^', '*', '/', '+', '-'};
-	std::string s = str;
 
 	for (int i = 0; i < s.size(); i++) //recursion for all the (())(())
 	{
 		if (s[i] == '(')
 		{
 			int until_brac = Ecore::get_ending_bracket(s, i) - i;
-			std::string s_substr = s.substr(i + 1, until_brac - 1);
-			std::string result = Ecore::solve_simple(s_substr, numbers, operators);
-			if (result == "NO")
+			std::string result = Esolve::partly(s.substr(i + 1, until_brac - 1), numbers);
+			if (result[0] == '#')
 				return result;
 			else
 				s.replace(i, until_brac + 1, result);
 		}
 	}
 
-	for (const char operat : operations_av)
+	for (const char operation : operations_av) //does all the operations
 	{
 		for (int i = 1; i < s.size(); i++)
 		{
 
-			if (s[i] == operat)
+			if (s[i] == operation)
 			{
 				long long int result = 1;
-				std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers, operators);
-				//might be changed to something more precise
-				//operations order be gut
 
-				switch (operat)
+				//get numbers and replace indexes
+				std::pair<std::pair<double, double>, std::pair<int, int>> packet = Ecore::getnumbers(s, i, numbers);
+				//if getnumbers failed then it should return error
+				if (packet.second.first == -1)
+					return "#1";
+
+				switch (operation)
 				{
 				case '^':
 					result = (long long int)(pow(packet.first.first, packet.first.second));
@@ -183,9 +187,9 @@ std::string Ecore::solve_simple(const std::string &str, std::unordered_set<char>
 				default:
 					break;
 				}
+
 				s.replace(packet.second.first, (packet.second.second - packet.second.first) - 1, std::to_string(result));
-				i = packet.second.first;
-				//std::cout << "Operation: " << operat << " Numbers: " << packet.first.first << " " << packet.first.second << "\n";
+				i = packet.second.first; //index should go back to where the operation has occured
 			}
 		}
 	}
