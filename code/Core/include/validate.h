@@ -12,4 +12,5 @@ namespace Evalidate{
 	bool characters(const std::string&);
 	std::string simplify(const std::string&);
 	bool fix_brackets(std::string&);
+	void range(std::pair<int, int> &range);
 }

@@ -2,6 +2,14 @@
 #include <unordered_set>
 #include "../include/core.h"
 
+void Evalidate::range(std::pair<int, int> &r)
+{
+	if(r.first > r.second)
+	{
+		std::swap(r.first, r.second);
+	}
+}
+
 bool Evalidate::brackets(const std::string &s)
 {
 	unsigned long int i = 0;

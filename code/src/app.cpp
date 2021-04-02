@@ -23,9 +23,24 @@ void Eapplication::tui()
 	std::cin >> this->range.first;
 	std::cout << "Enter ending x: ";
 	std::cin >> this->range.second;
+	Evalidate::range(this->range);
 	std::cout << "Your x range is from " << this->range.first << " to " << this->range.second << "\n";
-	if(Ecore::run(this->range, this->equation))
+	
+	if (Evalidate::equation(equation))
 	{
-		std::cout << "Succesfully solved equation \n";
+		std::string fixed_equation = Evalidate::simplify(equation);
+
+		for (int x = range.first; x <= range.second; x++) //solves all points in range
+		{
+			try
+			{
+				std::cout << "x = " << x << " y = " << Esolve::main(fixed_equation, x) << "\n";
+			}
+			catch (const std::exception &e)
+			{
+				std::cerr << "There's an error caused by: " << e.what() << '\n';
+			}
+		}
 	}
+	
 }
