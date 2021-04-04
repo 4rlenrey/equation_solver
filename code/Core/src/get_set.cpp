@@ -19,11 +19,11 @@ std::vector<std::string> Eget_set::main(std::string equation, const std::pair<in
 	int range_th = range.second - range.first;
 	std::vector<std::string> all(range_th);
 
-	int left = range_th % threads;
-	range_th -= left;
-	range_th = range_th / threads;
-	int f_x = range.first;
-	int start_filling = 0;
+	int leftover = range_th % threads;
+	range_th -= leftover;
+	range_th = range_th / threads; //range for a single thread
+	int f_x = range.first; //x for a thread
+	int start_filling = 0; //starting index for filling
 
 	std::thread t[threads];
 
@@ -37,6 +37,12 @@ std::vector<std::string> Eget_set::main(std::string equation, const std::pair<in
 	{
 		t[i].join();
 	}
-
+	while(leftover)
+	{
+		all[start_filling] = Esolve::main(equation, f_x, se);
+		start_filling++;
+		f_x++;
+		leftover--;
+	}
 	return all;
 }

@@ -111,11 +111,9 @@ std::string Evalidate::simplify(const std::string &str)
 		number.insert(i);
 	for (const char &i : a_operations)
 		operation.insert(i);
-
-	if (Evalidate::fix_brackets(s))
-	{
-		std::cout << "Fixed brackets succesfully \n";
-	}
+		
+	Evalidate::fix_brackets(s)
+	
 
 	for (int i = 0; i < s.size(); i++)
 	{
