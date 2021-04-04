@@ -2,7 +2,7 @@
 
 int main()
 {
-	Eapplication app{"TUI"};
+	Eapplication app{"GUI"};
 	app.run();
 	return 0;
 }

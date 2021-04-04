@@ -9,16 +9,26 @@ find_package (Threads)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/code/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/code/Core/include/
+    ${CMAKE_CURRENT_SOURCE_DIR}/code/gui/include/
     )
     
 AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/code/src/ Engine_Sources)
 AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/code/Core/src/ Core_Sources)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/code/gui/src/ gui_Sources)
 
 set(
     SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/code/main.cpp
     ${Engine_Sources}
     ${Core_Sources}
+    ${gui_Sources}
+)
+
+link_libraries(
+    sfml-graphics
+    sfml-window
+    sfml-system
+    sfml-audio
 )
 
 add_executable(a ${SRC})

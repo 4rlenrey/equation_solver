@@ -1,5 +1,6 @@
 #pragma once
 #include "../Core/include/core.h"
+#include "../gui/include/window.h"
 
 class Eapplication
 {
