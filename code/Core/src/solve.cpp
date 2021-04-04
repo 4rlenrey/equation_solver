@@ -1,13 +1,7 @@
 #include "../include/core.h"
 
-std::string Esolve::main(std::string s, int x)
+std::string Esolve::main(std::string s, int x, const std::unordered_set<char> &numbers)
 {
-	std::string a_numbers = "01234567890,.x";
-	std::unordered_set<char> numbers;
-
-	for (const char &i : a_numbers)
-		numbers.insert(i);
-
 	std::string s_x = std::to_string(x);
 
 	for (int i = 0; i < s.size(); i++)
@@ -20,8 +14,7 @@ std::string Esolve::main(std::string s, int x)
 	return Esolve::partly(s, numbers);
 }
 
-
-std::string Esolve::partly(std::string s, std::unordered_set<char> &numbers)
+std::string Esolve::partly(std::string s,const std::unordered_set<char> &numbers)
 {
 	std::vector<char> operations_av = {'^', '*', '/', '+', '-'};
 

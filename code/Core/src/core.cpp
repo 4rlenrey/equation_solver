@@ -1,6 +1,5 @@
 #include "../include/core.h"
 
-
 int Ecore::get_ending_bracket(const std::string &s, int start)
 {
 	unsigned long int i = start + 1;
@@ -27,7 +26,7 @@ int Ecore::get_ending_bracket(const std::string &s, int start)
 }
 
 //first number, second number, start (to replace), end (to replace)
-std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(const std::string &s, int i, std::unordered_set<char> &numbers)
+std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(const std::string &s, int i,const std::unordered_set<char> &numbers)
 {
 	int i_start = 0; //variables helping to get the numbers
 	int i_end = i;
@@ -77,7 +76,7 @@ std::pair<std::pair<double, double>, std::pair<int, int>> Ecore::getnumbers(cons
 	}
 	catch (const std::exception &e)
 	{
-		std::cerr << "An error has occured by " << e.what() << "while trying to convert these numbers to double type: ";
+		std::cerr << "An error has occured by " << e.what() << " while trying to convert these numbers to double type: ";
 		std::cerr << first_number << " " << second_number << "\n";
 		return std::make_pair(std::make_pair(0, 0), std::make_pair(-1, -1));
 	}

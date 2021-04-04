@@ -7,6 +7,13 @@
 
 bool Etesting::base()
 {
+		
+	std::string a_numbers = "01234567890,.x";
+	std::unordered_set<char> numbers;
+
+	for (const char &i : a_numbers)
+		numbers.insert(i);
+
 	bool passed = true;
 
 	TEST_CONTAINER;
@@ -21,7 +28,7 @@ bool Etesting::base()
 
 	ALL_TESTS
 	{
-		std::string sss = Esolve::main(test_cases[i].first, 1);
+		std::string sss = Esolve::main(test_cases[i].first, 1, numbers);
 
 		if (sss != test_cases[i].second)
 		{

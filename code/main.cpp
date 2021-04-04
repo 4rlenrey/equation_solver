@@ -1,6 +1,5 @@
 #include "app.h"
 
-
 int main()
 {
 	Eapplication app{"TUI"};
