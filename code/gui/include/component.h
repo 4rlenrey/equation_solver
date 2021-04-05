@@ -37,6 +37,5 @@ public:
 	Efocusable();
 	static std::vector<Efocusable *> efocusables;
 
-	void update();
 	virtual ~Efocusable();
 };

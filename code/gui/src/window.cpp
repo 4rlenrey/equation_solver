@@ -1,19 +1,23 @@
 #include "../include/window.h"
 
-bool isSpriteHover(sf::FloatRect sprite, sf::Vector2f mp)
-{
-	if (sprite.contains(mp))
-		return true;
-	return false;
-}
-
 Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
 	this->window.create(sf::VideoMode(size_x, size_y), title);
 
 	Ebutton button(sf::Vector2f(0, 0), sf::Vector2f(100, 100), "Button", 20);
+	Etext_box box(sf::Vector2f(200, 0), sf::Vector2f(200, 100), 20);
 
 	run();
+}
+void Ewindow::update()
+{
+	for (auto &obj : Etext_box::etext_boxes)
+	{
+		if (obj->active)
+		{
+			obj->update();
+		}
+	}
 }
 
 void Ewindow::run()
@@ -23,6 +27,7 @@ void Ewindow::run()
 		poll_events();
 
 		this->window.clear();
+		update();
 		draw();
 		this->window.display();
 	}
@@ -38,6 +43,12 @@ void Ewindow::poll_events()
 			check_clicks();
 		else if (this->event.type == sf::Event::MouseButtonReleased) //poor implementation
 			release_clicks();
+
+		else if (this->event.type == sf::Event::TextEntered) //entering text
+			for (auto &obj : Etext_box::etext_boxes)
+				if (obj->active)
+					obj->keyadded(event);
+				
 	}
 }
 
@@ -59,7 +70,7 @@ void Ewindow::check_clicks()
 			obj->deactivate();
 	}
 
-	for (auto &obj : Eclickable::eclickables) 
+	for (auto &obj : Eclickable::eclickables)
 	{
 		if (obj->rectangle.getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
 			obj->activate();

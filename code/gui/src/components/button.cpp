@@ -1,5 +1,4 @@
 #include "../../include/components/button.h"
-#include "../../include/static_assets.h"
 
 sf::Font Efonts::basic;
 
