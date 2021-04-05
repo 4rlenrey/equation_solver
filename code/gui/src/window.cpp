@@ -3,7 +3,8 @@
 Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
 	this->window.create(sf::VideoMode(size_x, size_y), title);
-	Ebutton button(sf::Vector2f(0, 0), sf::Vector2f(100, 100), "Test");
+
+	Ebutton button(sf::Vector2f(0, 0), sf::Vector2f(100, 100), "Test", 20);
 	run();
 
 }
