@@ -1,7 +1,7 @@
 #pragma once
 #include "../component.h"
 
-class Ebutton : public Efocusable
+class Ebutton : public Eclickable
 {
 	sf::Text text;
 public:
@@ -9,8 +9,4 @@ public:
 	Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int);
 	
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-	void activate();
-	void deactivate();
-	static sf::Font font;
-
 };

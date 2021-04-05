@@ -1,9 +1,9 @@
 #include "app.h"
-#include "gui/include/components/button.h"
+#include "gui/include/component.h"
 
 int main()
 {
-	if (!Ebutton::font.loadFromFile("assets/fonts/CheGuevaraBarry-Brown.ttf"))
+	if (!Efonts::basic.loadFromFile("assets/fonts/CheGuevaraBarry-Brown.ttf"))
 		std::cout << "loading font failed \n";
 	
 

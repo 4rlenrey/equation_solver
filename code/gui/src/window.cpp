@@ -35,9 +35,9 @@ void Ewindow::poll_events()
 		if (this->event.type == sf::Event::Closed)
 			this->window.close();
 		else if (this->event.type == sf::Event::MouseButtonPressed)
-		{
 			check_clicks();
-		}
+		else if (this->event.type == sf::Event::MouseButtonReleased) //poor implementation
+			release_clicks();
 	}
 }
 
@@ -53,9 +53,21 @@ void Ewindow::check_clicks()
 {
 	for (auto &obj : Efocusable::efocusables) //chceck all components in a static vector
 	{
-		if(obj->rectangle.getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
+		if (obj->rectangle.getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
 			obj->activate();
 		else
 			obj->deactivate();
 	}
+
+	for (auto &obj : Eclickable::eclickables) 
+	{
+		if (obj->rectangle.getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y)))
+			obj->activate();
+	}
+}
+
+void Ewindow::release_clicks()
+{
+	for (auto &obj : Eclickable::eclickables)
+		obj->deactivate();
 }

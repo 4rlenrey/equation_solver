@@ -1,11 +1,12 @@
 #include "../../include/components/button.h"
+#include "../../include/static_assets.h"
 
-sf::Font Ebutton::font;
+sf::Font Efonts::basic;
 
 Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size)
 {
 	this->text.setString(text_str);
-	this->text.setFont(font);
+	this->text.setFont(Efonts::basic);
 	this->text.setCharacterSize(c_size);
 	this->text.setPosition(sf::Vector2f(0, 0));
 	this->text.setFillColor(sf::Color(244, 244, 249));
@@ -25,22 +26,4 @@ void Ebutton::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	target.draw(rectangle, states);
 	target.draw(text, states);
-}
-
-void Ebutton::activate()
-{
-	if(!active)
-	{
-		active = true;
-		rectangle.setFillColor(color_active);
-	}
-	this->deactivate();
-}
-void Ebutton::deactivate()
-{
-	if(active)
-	{
-		rectangle.setFillColor(color_deactive);
-		active = false;
-	}
 }

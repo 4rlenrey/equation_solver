@@ -13,5 +13,6 @@ public:
 	void run();
 	void draw();
 	void check_clicks();
+	void release_clicks();
 	void poll_events();
 };

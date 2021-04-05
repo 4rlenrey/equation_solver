@@ -2,6 +2,7 @@
 
 std::vector<Ecomponent *> Ecomponent::ecomponents = {};
 std::vector<Efocusable *> Efocusable::efocusables = {};
+std::vector<Eclickable *> Eclickable::eclickables = {};
 
 Ecomponent::Ecomponent()
 {
@@ -28,7 +29,7 @@ Efocusable::~Efocusable()
 	efocusables.erase(std::remove(begin(efocusables), end(efocusables), this), end(efocusables));
 }
 
-void Efocusable::activate()
+void Ecomponent::activate()
 {
 
 	if(!active)
@@ -37,11 +38,20 @@ void Efocusable::activate()
 		rectangle.setFillColor(color_active);
 	}
 }
-void Efocusable::deactivate()
+void Ecomponent::deactivate()
 {
 	if(active)
 	{
 		rectangle.setFillColor(color_deactive);
 		active = false;
 	}
+}
+
+Eclickable::Eclickable()
+{
+	eclickables.push_back(this);
+}
+Eclickable::~Eclickable()
+{
+	eclickables.erase(std::remove(begin(eclickables), end(eclickables), this), end(eclickables));
 }
