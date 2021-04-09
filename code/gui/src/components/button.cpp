@@ -2,7 +2,7 @@
 
 sf::Font Efonts::basic;
 
-Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(std::string)> on_click)
+Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(void)> on_click)
 {
 	this->text.setString(text_str);
 	this->text.setFont(Efonts::basic);
@@ -34,5 +34,5 @@ void Ebutton::deactivate()
 		rectangle.setFillColor(color_deactive);
 		active = false;
 	}
-	on_click("test_lol");
+	on_click();
 }

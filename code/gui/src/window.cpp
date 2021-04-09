@@ -1,15 +1,11 @@
 #include "../include/window.h"
 
-void testowe(std::string s)
-{
-	std::cout << s << "\n";
-}
+void Ehandle_core::draw_funct();
 
 Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
 	this->window.create(sf::VideoMode(size_x, size_y), title);
-	std::function<void(std::string)> d = testowe;
-	Ebutton button(sf::Vector2f(0, 200), sf::Vector2f(100, 100), "Generate", 20, d);
+	Ebutton button(sf::Vector2f(0, 200), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct);
 	Etext_box box(sf::Vector2f(200, 0), sf::Vector2f(200, 100), 20);
 
 	run();
