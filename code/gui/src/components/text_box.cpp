@@ -24,6 +24,11 @@ Etext_box::Etext_box(const sf::Vector2f &pos, const sf::Vector2f &size, int c_si
 	etext_boxes.push_back(this);
 }
 
+std::string Etext_box::get_text()
+{
+	return this->input_text;
+}
+
 void Etext_box::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	target.draw(rectangle, states);
@@ -32,13 +37,21 @@ void Etext_box::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Etext_box::update()
 {
-	coursor_ef += clock.restart();
-	if (coursor_ef >= sf::seconds(0.5f))
+	if (this->active)
 	{
-		show_cursor = !show_cursor;
-		coursor_ef = sf::Time::Zero;
+		coursor_ef += clock.restart();
+		if (coursor_ef >= sf::seconds(0.5f))
+		{
+			show_cursor = !show_cursor;
+			coursor_ef = sf::Time::Zero;
+		}
+		text.setString(input_text + (show_cursor ? '_' : ' '));
 	}
-	text.setString(input_text + (show_cursor ? '_' : ' '));
+	else if (this->show_cursor)
+	{
+		this->show_cursor = false;
+		text.setString(input_text + ' ');
+	}
 }
 
 Etext_box::~Etext_box()

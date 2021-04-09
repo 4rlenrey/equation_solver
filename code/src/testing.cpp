@@ -4,7 +4,6 @@
 #define ADD_TEST_CASE test_cases.push_back
 #define PAIR std::make_pair
 #define ALL_TESTS for (int i = 0; i < test_cases.size(); i++)
-
 bool Etesting::base()
 {
 		

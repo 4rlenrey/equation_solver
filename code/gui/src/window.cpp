@@ -1,10 +1,15 @@
 #include "../include/window.h"
 
+void testowe(std::string s)
+{
+	std::cout << s << "\n";
+}
+
 Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
 	this->window.create(sf::VideoMode(size_x, size_y), title);
-
-	Ebutton button(sf::Vector2f(0, 0), sf::Vector2f(100, 100), "Button", 20);
+	std::function<void(std::string)> d = testowe;
+	Ebutton button(sf::Vector2f(0, 200), sf::Vector2f(100, 100), "Generate", 20, d);
 	Etext_box box(sf::Vector2f(200, 0), sf::Vector2f(200, 100), 20);
 
 	run();
@@ -13,10 +18,7 @@ void Ewindow::update()
 {
 	for (auto &obj : Etext_box::etext_boxes)
 	{
-		if (obj->active)
-		{
-			obj->update();
-		}
+		obj->update();
 	}
 }
 
@@ -48,7 +50,6 @@ void Ewindow::poll_events()
 			for (auto &obj : Etext_box::etext_boxes)
 				if (obj->active)
 					obj->keyadded(event);
-				
 	}
 }
 
@@ -80,5 +81,7 @@ void Ewindow::check_clicks()
 void Ewindow::release_clicks()
 {
 	for (auto &obj : Eclickable::eclickables)
+	{
 		obj->deactivate();
+	}
 }

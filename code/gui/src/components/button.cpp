@@ -2,12 +2,12 @@
 
 sf::Font Efonts::basic;
 
-Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size)
+Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(std::string)> on_click)
 {
 	this->text.setString(text_str);
 	this->text.setFont(Efonts::basic);
 	this->text.setCharacterSize(c_size);
-	this->text.setPosition(sf::Vector2f(0, 0));
+	this->text.setPosition(pos);
 	this->text.setFillColor(sf::Color(244, 244, 249));
 
 	this->active = false;
@@ -18,11 +18,21 @@ Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::St
 	this->rectangle.setFillColor(color_deactive);
 	this->rectangle.setPosition(position);
 	this->rectangle.setSize(size);
+	this->on_click = on_click;
 }
-
 
 void Ebutton::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	target.draw(rectangle, states);
 	target.draw(text, states);
+}
+
+void Ebutton::deactivate()
+{
+	if(active)
+	{
+		rectangle.setFillColor(color_deactive);
+		active = false;
+	}
+	on_click("test_lol");
 }

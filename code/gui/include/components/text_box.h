@@ -13,7 +13,7 @@ public:
 	void keyadded(sf::Event);
 
 	static std::vector<Etext_box *> etext_boxes;
-
+	std::string get_text();
 	Etext_box(const sf::Vector2f &pos, const sf::Vector2f &size, int);
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 	virtual ~Etext_box();

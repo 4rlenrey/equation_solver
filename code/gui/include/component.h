@@ -27,7 +27,6 @@ public:
 	Eclickable();
 
 	static std::vector<Eclickable *> eclickables;
-
 	virtual ~Eclickable();
 };
 

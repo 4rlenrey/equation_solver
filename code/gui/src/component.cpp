@@ -31,7 +31,6 @@ Efocusable::~Efocusable()
 
 void Ecomponent::activate()
 {
-
 	if(!active)
 	{
 		active = true;
