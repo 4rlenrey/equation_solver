@@ -10,7 +10,7 @@ class Ewindow
 	sf::Event event;
 	sf::RenderWindow window;
 	Ebutton *confirm_equation;
-	Etext_box *equation;
+	Etext_box *equation_box;
 
 public:
 	Ewindow(int size_x, int size_y, std::string title);
@@ -31,7 +31,7 @@ struct Edrawing_packet
 
 namespace Ehandle_core
 {
-	void draw_funct();
-	std::string get_equation(const Etext_box& box);
+	void draw_funct( Etext_box*);
+	std::string get_equation( Etext_box& box);
 	Edrawing_packet get_drawing_packet(std::string equation);
 };
