@@ -9,6 +9,8 @@ class Ewindow
 {
 	sf::Event event;
 	sf::RenderWindow window;
+	Ebutton *confirm_equation;
+	Etext_box *equation;
 
 public:
 	Ewindow(int size_x, int size_y, std::string title);
@@ -18,6 +20,7 @@ public:
 	void check_clicks();
 	void release_clicks();
 	void poll_events();
+	~Ewindow();
 };
 
 struct Edrawing_packet

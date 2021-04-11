@@ -5,11 +5,16 @@ void Ehandle_core::draw_funct();
 Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
 	this->window.create(sf::VideoMode(size_x, size_y), title);
-	Ebutton button(sf::Vector2f(0, 200), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct);
-	Etext_box box(sf::Vector2f(200, 0), sf::Vector2f(200, 100), 20);
-
+	this->confirm_equation = new Ebutton(sf::Vector2f(0, 200), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct);
+	this->equation = new Etext_box(sf::Vector2f(200, 0), sf::Vector2f(200, 100), 20);
 	run();
 }
+Ewindow::~Ewindow()
+{
+	delete this->confirm_equation;
+	delete this->equation;
+}
+
 void Ewindow::update()
 {
 	for (auto &obj : Etext_box::etext_boxes)
