@@ -9,6 +9,7 @@ class Ewindow
 {
 	sf::Event event;
 	sf::RenderWindow window;
+	sf::RectangleShape background;
 	Ebutton *confirm_equation;
 	Etext_box *equation_box;
 

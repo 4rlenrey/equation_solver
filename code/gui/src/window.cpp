@@ -1,6 +1,6 @@
 #include "../include/window.h"
 
-void Ehandle_core::draw_funct( Etext_box*);
+void Ehandle_core::draw_funct(Etext_box *);
 
 Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
@@ -8,7 +8,11 @@ Ewindow::Ewindow(int size_x, int size_y, std::string title)
 
 	this->equation_box = new Etext_box(sf::Vector2f(200, 0), sf::Vector2f(200, 100), 20);
 	this->confirm_equation = new Ebutton(sf::Vector2f(0, 200), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct, equation_box);
-	
+
+	this->background.setFillColor(sf::Color(184, 219, 217));
+	this->background.setPosition(sf::Vector2f(0, 0));
+	this->background.setSize(sf::Vector2f(size_x, size_y));
+
 	run();
 }
 Ewindow::~Ewindow()
@@ -58,6 +62,7 @@ void Ewindow::poll_events()
 
 void Ewindow::draw()
 {
+	this->window.draw(background);
 	for (auto &obj : Ecomponent::ecomponents) //draw all components in a static vector
 	{
 		this->window.draw(*obj);
