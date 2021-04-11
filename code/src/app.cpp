@@ -19,7 +19,7 @@ void Eapplication::run()
 
 void Eapplication::gui()
 {
-	Ewindow gui{800, 600, "EquationSolver"};
+	Ewindow gui{1020, 800, "EquationSolver"};
 }
 
 void Eapplication::tui()

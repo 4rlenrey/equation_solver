@@ -32,6 +32,4 @@ struct Edrawing_packet
 namespace Ehandle_core
 {
 	void draw_funct( Etext_box*);
-	std::string get_equation( Etext_box& box);
-	Edrawing_packet get_drawing_packet(std::string equation);
 };
