@@ -3,7 +3,10 @@
 #include "component.h"
 #include "components/button.h"
 #include "components/text_box.h"
+#include "components/graph_box.h"
 #include "../../Core/include/core.h"
+
+class Ebutton; //forward declaration, will be changed later (probably)
 
 class Ewindow
 {
@@ -11,9 +14,13 @@ class Ewindow
 	sf::RenderWindow window;
 	sf::RectangleShape background;
 	Ebutton *confirm_equation;
-	Etext_box *equation_box;
 
 public:
+	Etext_box *equation_box;
+	Etext_box *threads_count_box;
+	Etext_box *accuracy_box;
+	Egraph_box *graph_box;
+
 	Ewindow(int size_x, int size_y, std::string title);
 	void run();
 	void draw();
@@ -26,11 +33,11 @@ public:
 
 struct Edrawing_packet
 {
-	std::pair<int,int> range;
+	std::pair<int, int> range;
 	std::vector<std::string> values;
 };
 
 namespace Ehandle_core
 {
-	void draw_funct( Etext_box*);
+	void draw_funct(Ewindow *);
 };

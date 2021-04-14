@@ -1,13 +1,17 @@
 #include "../include/window.h"
 
-void Ehandle_core::draw_funct(Etext_box *);
+void Ehandle_core::draw_funct(Ewindow *);
 
 Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
 	this->window.create(sf::VideoMode(size_x, size_y), title);
 
-	this->equation_box = new Etext_box(sf::Vector2f(200, 0), sf::Vector2f(200, 100), 20);
-	this->confirm_equation = new Ebutton(sf::Vector2f(0, 200), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct, equation_box);
+	this->equation_box = new Etext_box(sf::Vector2f(200, 600), sf::Vector2f(350, 100), 20);
+	this->threads_count_box = new Etext_box(sf::Vector2f(600, 600), sf::Vector2f(100, 100), 20);
+	this->accuracy_box = new Etext_box(sf::Vector2f(750, 600), sf::Vector2f(100, 100), 20);
+
+	this->confirm_equation = new Ebutton(sf::Vector2f(50, 600), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct, this);
+	this->graph_box = new Egraph_box(sf::Vector2f(50, 50), sf::Vector2f(801, 501));
 
 	this->background.setFillColor(sf::Color(184, 219, 217));
 	this->background.setPosition(sf::Vector2f(0, 0));
@@ -19,6 +23,9 @@ Ewindow::~Ewindow()
 {
 	delete this->confirm_equation;
 	delete this->equation_box;
+	delete this->threads_count_box;
+	delete this->accuracy_box;
+	delete this->graph_box;
 }
 
 void Ewindow::update()

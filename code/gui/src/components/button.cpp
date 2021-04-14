@@ -2,22 +2,22 @@
 
 sf::Font Efonts::basic;
 
-Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(Etext_box *)> on_click)
+Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(Ewindow *)> on_click)
 {
 	set_up(pos, size, text_str, c_size, on_click);
-	text_source = NULL;
+	window_parent = NULL;
 }
 
-Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(Etext_box *)> on_click, Etext_box *t)
+Ebutton::Ebutton(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(Ewindow *)> on_click, Ewindow *t)
 {
 	set_up(pos, size, text_str, c_size, on_click);
-	text_source = t;
+	window_parent = t;
 }
 Ebutton::~Ebutton()
 {
-	text_source = NULL;
+	window_parent = NULL;
 }
-void Ebutton::set_up(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(Etext_box *)> on_click)
+void Ebutton::set_up(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(Ewindow *)> on_click)
 {
 	this->text.setString(text_str);
 	this->text.setFont(Efonts::basic);
@@ -49,6 +49,6 @@ void Ebutton::deactivate()
 	{
 		rectangle.setFillColor(color_deactive);
 		active = false;
-		on_click(text_source);
+		on_click(window_parent);
 	}
 }

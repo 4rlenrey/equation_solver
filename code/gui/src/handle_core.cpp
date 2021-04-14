@@ -1,7 +1,9 @@
 #include "../include/window.h"
 
-void Ehandle_core::draw_funct(Etext_box *b)
+void Ehandle_core::draw_funct(Ewindow *w)
 {
+
+	Etext_box *b = w->equation_box;
 	std::string equation = b->get_text();
 
 	std::cout << equation
