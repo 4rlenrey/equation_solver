@@ -4,14 +4,15 @@ void Ehandle_core::draw_funct(Ewindow *w)
 {
 
 	Etext_box *b = w->equation_box;
+	Egraph_box *gb = w->graph_box;
 	std::string equation = b->get_text();
 
 	std::cout << equation
 			  << "\n";
 
 	std::pair<int, int> range;
-	range.first = -10; 
-	range.second = 10; 
+	range.first = -400;
+	range.second = 400;
 
 	std::string a_numbers = "01234567890,.x";
 	std::unordered_set<char> numbers;
@@ -27,11 +28,38 @@ void Ehandle_core::draw_funct(Ewindow *w)
 
 		std::vector<std::string> numbers_start = Eget_set::main(fixed_equation, range, threads_count, numbers);
 
-		int x = range.first;
+		bool before = false;
+		const int y_ax = gb->lineX.getGlobalBounds().top;
+		int beforeY = 0;
+		int beforeX = 0;
+		int nowY = 0;
+		int nowX = 0;
+
 		for (const auto &i : numbers_start)
 		{
-			std::cout << "x = " << x << " y = " << i << "\n";
-			x++;
+			nowX++; //can be later changed to another precision
+
+			if (i[1] == '#')
+			{
+				before = false;
+			}
+			else
+			{
+				nowY = stoi(i);
+				if (before)
+				{
+					gb->draw_lines(sf::Vector2f(beforeX, (y_ax-beforeY)), sf::Vector2f(nowX, (y_ax-nowY)));
+					beforeY = nowY;
+					beforeX = nowX;
+				}
+				else
+				{
+					beforeY = nowY;
+					beforeX = nowX;
+				}
+				before = true;
+			}
 		}
 	}
+	gb->update();
 }
