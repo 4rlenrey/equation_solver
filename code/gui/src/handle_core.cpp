@@ -1,5 +1,11 @@
 #include "../include/window.h"
 
+void Ehandle_core::clearwindow(Ewindow *w)
+{
+	Egraph_box *gb = w->graph_box;
+	gb->clear();
+
+}
 void Ehandle_core::draw_funct(Ewindow *w)
 {
 
@@ -63,7 +69,6 @@ void Ehandle_core::draw_funct(Ewindow *w)
 				}
 				catch (const std::exception &e)
 				{
-					std::cerr << e.what() << '\n';
 					before = false;
 				}
 			}

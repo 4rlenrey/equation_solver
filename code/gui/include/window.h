@@ -40,4 +40,5 @@ struct Edrawing_packet
 namespace Ehandle_core
 {
 	void draw_funct(Ewindow *);
+	void clearwindow(Ewindow *);
 };

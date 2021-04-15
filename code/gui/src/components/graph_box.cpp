@@ -7,7 +7,7 @@ Egraph_box::Egraph_box(const sf::Vector2f &pos, const sf::Vector2f &size)
 	this->color_active = sf::Color(54, 66, 72);
 	this->position = pos;
 
-	this->rectangle.setFillColor(color_deactive);
+	this->rectangle.setFillColor(sf::Color::Black);
 	this->rectangle.setPosition(position);
 	this->rectangle.setSize(size);
 	this->drawable.create((int)size.x, (int)size.y);
@@ -26,6 +26,15 @@ Egraph_box::Egraph_box(const sf::Vector2f &pos, const sf::Vector2f &size)
 void Egraph_box::update() //have to be used later in draw method
 {
 	esprite.setTexture(this->drawable.getTexture());
+}
+
+void Egraph_box::clear()
+{
+	drawable.clear();
+	drawable.draw(lineX);
+	drawable.draw(lineY);
+	drawable.display();
+	update();
 }
 
 void Egraph_box::draw(sf::RenderTarget &target, sf::RenderStates states) const
