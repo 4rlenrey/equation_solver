@@ -14,6 +14,7 @@ class Ewindow
 	sf::RenderWindow window;
 	sf::RectangleShape background;
 	Ebutton *confirm_equation;
+	Ebutton *clear_button;
 
 public:
 	Etext_box *equation_box;

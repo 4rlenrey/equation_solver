@@ -12,7 +12,7 @@ Ewindow::Ewindow(int size_x, int size_y, std::string title)
 	this->accuracy_box = new Etext_box(sf::Vector2f(750, 600), sf::Vector2f(100, 100), 20);
 
 	this->confirm_equation = new Ebutton(sf::Vector2f(50, 600), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct, this);
-	this->confirm_equation = new Ebutton(sf::Vector2f(50, 720), sf::Vector2f(100, 50), "Clear", 20, Ehandle_core::clearwindow, this);
+	this->clear_button = new Ebutton(sf::Vector2f(50, 720), sf::Vector2f(100, 50), "Clear", 20, Ehandle_core::clearwindow, this);
 	this->graph_box = new Egraph_box(sf::Vector2f(50, 50), sf::Vector2f(801, 501));
 
 	this->background.setFillColor(sf::Color(184, 219, 217));
@@ -24,6 +24,7 @@ Ewindow::Ewindow(int size_x, int size_y, std::string title)
 Ewindow::~Ewindow()
 {
 	delete this->confirm_equation;
+	delete this->clear_button;
 	delete this->equation_box;
 	delete this->threads_count_box;
 	delete this->accuracy_box;

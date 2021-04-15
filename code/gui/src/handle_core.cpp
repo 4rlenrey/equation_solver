@@ -13,8 +13,6 @@ void Ehandle_core::draw_funct(Ewindow *w)
 	Egraph_box *gb = w->graph_box;
 	std::string equation = b->get_text();
 
-	std::cout << equation
-			  << "\n";
 
 	std::pair<int, int> range;
 	range.first = -400;
