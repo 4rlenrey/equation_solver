@@ -45,19 +45,27 @@ void Ehandle_core::draw_funct(Ewindow *w)
 			}
 			else
 			{
-				nowY = stoi(i);
-				if (before)
+				try
 				{
-					gb->draw_lines(sf::Vector2f(beforeX, (y_ax-beforeY)), sf::Vector2f(nowX, (y_ax-nowY)));
-					beforeY = nowY;
-					beforeX = nowX;
+					nowY = stoi(i);
+					if (before)
+					{
+						gb->draw_lines(sf::Vector2f(beforeX, (y_ax - beforeY)), sf::Vector2f(nowX, (y_ax - nowY)));
+						beforeY = nowY;
+						beforeX = nowX;
+					}
+					else
+					{
+						beforeY = nowY;
+						beforeX = nowX;
+					}
+					before = true;
 				}
-				else
+				catch (const std::exception &e)
 				{
-					beforeY = nowY;
-					beforeX = nowX;
+					std::cerr << e.what() << '\n';
+					before = false;
 				}
-				before = true;
 			}
 		}
 	}
