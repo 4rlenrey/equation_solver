@@ -4,7 +4,6 @@ void Ehandle_core::clearwindow(Ewindow *w)
 {
 	Egraph_box *gb = w->graph_box;
 	gb->clear();
-
 }
 void Ehandle_core::draw_funct(Ewindow *w)
 {

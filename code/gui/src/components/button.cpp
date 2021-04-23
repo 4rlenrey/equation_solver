@@ -17,22 +17,26 @@ Ebutton::~Ebutton()
 {
 	window_parent = NULL;
 }
-void Ebutton::set_up(const sf::Vector2f &pos, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(Ewindow *)> on_click)
+void Ebutton::set_up(const sf::Vector2f &position, const sf::Vector2f &size, const sf::String &text_str, int c_size, std::function<void(Ewindow *)> on_click)
 {
-	this->text.setString(text_str);
-	this->text.setFont(Efonts::basic);
-	this->text.setCharacterSize(c_size);
-	this->text.setPosition(pos);
-	this->text.setFillColor(sf::Color(244, 244, 249));
+	active = false;
+	color_deactive = sf::Color(44, 56, 62);
+	color_active = sf::Color(54, 66, 72);
+	this->position = position;
 
-	this->active = false;
-	this->color_deactive = sf::Color(44, 56, 62);
-	this->color_active = sf::Color(54, 66, 72);
-	this->position = pos;
+	rectangle.setFillColor(color_deactive);
+	rectangle.setPosition(position);
+	rectangle.setSize(size);
 
-	this->rectangle.setFillColor(color_deactive);
-	this->rectangle.setPosition(position);
-	this->rectangle.setSize(size);
+
+	text.setString(text_str);
+	text.setFont(Efonts::basic);
+	text.setCharacterSize(c_size);
+
+	text_position.x = position.x + (size.x - text.getLocalBounds().width)/2;
+	text_position.y = position.y + (size.y - text.getLocalBounds().height)/2;
+	text.setPosition(text_position);
+	text.setFillColor(sf::Color(244, 244, 249));
 
 	this->on_click = on_click;
 }

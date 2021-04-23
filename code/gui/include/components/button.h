@@ -12,6 +12,7 @@ class Ebutton : public Eclickable
 {
 	sf::Text text;
 	Ewindow *window_parent;
+	sf::Vector2f text_position;
 
 public:
 	void deactivate();

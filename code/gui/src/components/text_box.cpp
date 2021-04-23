@@ -6,18 +6,21 @@ Etext_box::Etext_box(const sf::Vector2f &pos, const sf::Vector2f &size, int c_si
 {
 	this->position = pos;
 	this->active = false;
-
-	this->text.setFont(Efonts::basic);
-	this->text.setCharacterSize(c_size);
-	this->text.setPosition(position);
-	this->text.setFillColor(sf::Color(244, 244, 249));
-
 	this->color_deactive = sf::Color(44, 56, 62);
 	this->color_active = sf::Color(54, 66, 72);
 
+	this->size = size;
 	this->rectangle.setFillColor(color_deactive);
 	this->rectangle.setPosition(position);
 	this->rectangle.setSize(size);
+
+	this->text.setFont(Efonts::basic);
+	this->text.setCharacterSize(c_size);
+
+	text_position.x = position.x + (size.x - text.getLocalBounds().width) / 2;
+	text_position.y = position.y + (size.y - text.getLocalBounds().height) / 2;
+	text.setPosition(text_position);
+	this->text.setFillColor(sf::Color(244, 244, 249));
 
 	this->coursor_ef = sf::Time::Zero;
 	this->show_cursor = false;
@@ -46,6 +49,9 @@ void Etext_box::update()
 			coursor_ef = sf::Time::Zero;
 		}
 		text.setString(input_text + (show_cursor ? '_' : ' '));
+		text_position.x = position.x + (size.x - text.getLocalBounds().width) / 2;
+		text_position.y = position.y + (size.y - text.getLocalBounds().height) / 2;
+		text.setPosition(text_position);
 	}
 	else if (this->show_cursor)
 	{

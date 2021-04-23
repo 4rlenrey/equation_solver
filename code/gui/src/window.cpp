@@ -1,23 +1,24 @@
 #include "../include/window.h"
 
+
 void Ehandle_core::draw_funct(Ewindow *);
 void Ehandle_core::clearwindow(Ewindow *);
 
 Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
-	this->window.create(sf::VideoMode(size_x, size_y), title);
+	window.create(sf::VideoMode(size_x, size_y), title);
 
-	this->equation_box = new Etext_box(sf::Vector2f(200, 600), sf::Vector2f(350, 100), 20);
-	this->threads_count_box = new Etext_box(sf::Vector2f(600, 600), sf::Vector2f(100, 100), 20);
-	this->accuracy_box = new Etext_box(sf::Vector2f(750, 600), sf::Vector2f(100, 100), 20);
+	equation_box = new Etext_box(sf::Vector2f(200, 600), sf::Vector2f(350, 100), 20);
+	threads_count_box = new Etext_box(sf::Vector2f(600, 600), sf::Vector2f(100, 100), 20);
+	accuracy_box = new Etext_box(sf::Vector2f(750, 600), sf::Vector2f(100, 100), 20);
 
-	this->confirm_equation = new Ebutton(sf::Vector2f(50, 600), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct, this);
-	this->clear_button = new Ebutton(sf::Vector2f(50, 720), sf::Vector2f(100, 50), "Clear", 20, Ehandle_core::clearwindow, this);
-	this->graph_box = new Egraph_box(sf::Vector2f(50, 50), sf::Vector2f(801, 501));
+	confirm_equation = new Ebutton(sf::Vector2f(50, 600), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct, this);
+	clear_button = new Ebutton(sf::Vector2f(50, 720), sf::Vector2f(100, 50), "Clear", 20, Ehandle_core::clearwindow, this);
+	graph_box = new Egraph_box(sf::Vector2f(50, 50), sf::Vector2f(801, 501));
 
-	this->background.setFillColor(sf::Color(184, 219, 217));
-	this->background.setPosition(sf::Vector2f(0, 0));
-	this->background.setSize(sf::Vector2f(size_x, size_y));
+	background.setFillColor(sf::Color(184, 219, 217));
+	background.setPosition(sf::Vector2f(0, 0));
+	background.setSize(sf::Vector2f(size_x, size_y));
 
 	run();
 }

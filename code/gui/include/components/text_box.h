@@ -7,7 +7,10 @@ class Etext_box : public Efocusable
 	std::string input_text;
 	sf::Clock clock;
 	bool show_cursor;
+	sf::Vector2f text_position;
+	sf::Vector2f size;
 	sf::Time coursor_ef;
+	
 public:
 	void update();
 	void keyadded(sf::Event);
