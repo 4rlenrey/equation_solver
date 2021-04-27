@@ -7,8 +7,8 @@ Egraph_box::Egraph_box(const sf::Vector2f &pos, const sf::Vector2f &size)
 	this->color_active = sf::Color(54, 66, 72);
 	this->position = pos;
 
-	this->rectangle.setFillColor(sf::Color::Black);
-	this->rectangle.setPosition(position);
+	this->rectangle.setFillColor(sf::Color(44, 56, 62));
+	this->rectangle.setPosition(0, 0);
 	this->rectangle.setSize(size);
 	this->drawable.create((int)size.x, (int)size.y);
 
@@ -16,6 +16,7 @@ Egraph_box::Egraph_box(const sf::Vector2f &pos, const sf::Vector2f &size)
 	this->esprite.setPosition(pos);
 
 	construct_lines();
+	drawable.draw(rectangle);
 	drawable.draw(lineX);
 	drawable.draw(lineY);
 	drawable.display();
@@ -31,6 +32,7 @@ void Egraph_box::update() //have to be used later in draw method
 void Egraph_box::clear()
 {
 	drawable.clear();
+	drawable.draw(rectangle);
 	drawable.draw(lineX);
 	drawable.draw(lineY);
 	drawable.display();
@@ -39,7 +41,6 @@ void Egraph_box::clear()
 
 void Egraph_box::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	target.draw(rectangle, states);
 	target.draw(esprite);
 }
 void Egraph_box::draw_lines(const sf::Vector2f first, const sf::Vector2f second)
