@@ -7,11 +7,31 @@ void Ehandle_core::clearwindow(Ewindow *w)
 }
 void Ehandle_core::draw_funct(Ewindow *w)
 {
+	int precision = 1;
+	int threads = 1;
+
+	if (w->threads_count_box->get_text() != "")
+		try
+		{
+			threads = stoi(w->threads_count_box->get_text());
+		}
+		catch (const std::exception &e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	if (w->accuracy_box->get_text() != "")
+		try
+		{
+			precision = stoi(w->accuracy_box->get_text());
+		}
+		catch (const std::exception &e)
+		{
+			std::cerr << e.what() << '\n';
+		}
 
 	Etext_box *b = w->equation_box;
 	Egraph_box *gb = w->graph_box;
 	std::string equation = b->get_text();
-
 
 	std::pair<int, int> range;
 	range.first = -400;
@@ -27,9 +47,7 @@ void Ehandle_core::draw_funct(Ewindow *w)
 	{
 		std::string fixed_equation = Evalidate::simplify(equation);
 
-		int threads_count = 1; //will be changed later
-
-		std::vector<std::string> numbers_start = Eget_set::main(fixed_equation, range, threads_count, numbers);
+		std::vector<std::string> numbers_start = Eget_set::main(fixed_equation, range, threads, numbers);
 
 		bool before = false;
 		const int y_ax = gb->lineX.getGlobalBounds().top;
@@ -40,7 +58,7 @@ void Ehandle_core::draw_funct(Ewindow *w)
 
 		for (const auto &i : numbers_start)
 		{
-			nowX++; //can be later changed to another precision
+			nowX += precision; //can be later changed to another precision
 
 			if (i[1] == '#')
 			{
