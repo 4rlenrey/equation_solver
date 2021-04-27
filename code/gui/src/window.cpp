@@ -1,6 +1,5 @@
 #include "../include/window.h"
 
-
 void Ehandle_core::draw_funct(Ewindow *);
 void Ehandle_core::clearwindow(Ewindow *);
 
@@ -18,7 +17,11 @@ Ewindow::Ewindow(int size_x, int size_y, std::string title)
 
 	background.setFillColor(sf::Color(184, 219, 217));
 	background.setPosition(sf::Vector2f(0, 0));
-	background.setSize(sf::Vector2f(size_x, size_y));
+	background.setSize(sf::Vector2f(size_x,  size_y));
+
+	labels[0] = new Elabel(sf::Vector2f(340, 700),20, "Equation");
+	labels[1] = new Elabel(sf::Vector2f(610, 700),20, "Threads");
+	labels[2] = new Elabel(sf::Vector2f(755, 700),20, "Accuracy");
 
 	run();
 }
@@ -30,6 +33,9 @@ Ewindow::~Ewindow()
 	delete this->threads_count_box;
 	delete this->accuracy_box;
 	delete this->graph_box;
+
+	for (auto i : labels)
+		delete i;
 }
 
 void Ewindow::update()

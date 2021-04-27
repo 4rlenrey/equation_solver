@@ -16,6 +16,7 @@ class Ewindow
 	sf::RectangleShape background;
 	Ebutton *confirm_equation;
 	Ebutton *clear_button;
+	
 	Elabel *labels[3];
 public:
 	Etext_box *equation_box;
