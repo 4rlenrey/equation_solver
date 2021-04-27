@@ -17,7 +17,7 @@ void Ehandle_core::draw_funct(Ewindow *w)
 		}
 		catch (const std::exception &e)
 		{
-			std::cerr << e.what() << '\n';
+			std::cerr << e.what() << " Threads number not valid "  << w->threads_count_box->get_text() << '\n';
 		}
 
 	Etext_box *b = w->equation_box;
