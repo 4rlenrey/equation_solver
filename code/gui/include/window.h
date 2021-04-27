@@ -16,12 +16,11 @@ class Ewindow
 	sf::RectangleShape background;
 	Ebutton *confirm_equation;
 	Ebutton *clear_button;
-	
-	Elabel *labels[3];
+
+	Elabel *labels[2];
 public:
 	Etext_box *equation_box;
 	Etext_box *threads_count_box;
-	Etext_box *accuracy_box;
 	Egraph_box *graph_box;
 
 	Ewindow(int size_x, int size_y, std::string title);

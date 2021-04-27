@@ -7,9 +7,8 @@ Ewindow::Ewindow(int size_x, int size_y, std::string title)
 {
 	window.create(sf::VideoMode(size_x, size_y), title);
 
-	equation_box = new Etext_box(sf::Vector2f(200, 600), sf::Vector2f(350, 100), 20);
-	threads_count_box = new Etext_box(sf::Vector2f(600, 600), sf::Vector2f(100, 100), 20);
-	accuracy_box = new Etext_box(sf::Vector2f(750, 600), sf::Vector2f(100, 100), 20);
+	equation_box = new Etext_box(sf::Vector2f(200, 600), sf::Vector2f(450, 100), 20);
+	threads_count_box = new Etext_box(sf::Vector2f(700, 600), sf::Vector2f(150, 100), 20);
 
 	confirm_equation = new Ebutton(sf::Vector2f(50, 600), sf::Vector2f(100, 100), "Generate", 20, Ehandle_core::draw_funct, this);
 	clear_button = new Ebutton(sf::Vector2f(50, 720), sf::Vector2f(100, 50), "Clear", 20, Ehandle_core::clearwindow, this);
@@ -19,9 +18,8 @@ Ewindow::Ewindow(int size_x, int size_y, std::string title)
 	background.setPosition(sf::Vector2f(0, 0));
 	background.setSize(sf::Vector2f(size_x,  size_y));
 
-	labels[0] = new Elabel(sf::Vector2f(340, 700),20, "Equation");
-	labels[1] = new Elabel(sf::Vector2f(610, 700),20, "Threads");
-	labels[2] = new Elabel(sf::Vector2f(755, 700),20, "Accuracy");
+	labels[0] = new Elabel(sf::Vector2f(390, 700),20, "Equation");
+	labels[1] = new Elabel(sf::Vector2f(740, 700),20, "Threads");
 
 	run();
 }
@@ -31,7 +29,6 @@ Ewindow::~Ewindow()
 	delete this->clear_button;
 	delete this->equation_box;
 	delete this->threads_count_box;
-	delete this->accuracy_box;
 	delete this->graph_box;
 
 	for (auto i : labels)

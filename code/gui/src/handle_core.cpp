@@ -19,15 +19,6 @@ void Ehandle_core::draw_funct(Ewindow *w)
 		{
 			std::cerr << e.what() << '\n';
 		}
-	if (w->accuracy_box->get_text() != "")
-		try
-		{
-			precision = stoi(w->accuracy_box->get_text());
-		}
-		catch (const std::exception &e)
-		{
-			std::cerr << e.what() << '\n';
-		}
 
 	Etext_box *b = w->equation_box;
 	Egraph_box *gb = w->graph_box;
@@ -58,7 +49,7 @@ void Ehandle_core::draw_funct(Ewindow *w)
 
 		for (const auto &i : numbers_start)
 		{
-			nowX += precision; //can be later changed to another precision
+			nowX++; //can be later changed to another precision
 
 			if (i[1] == '#')
 			{
