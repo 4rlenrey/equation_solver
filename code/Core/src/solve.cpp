@@ -14,16 +14,19 @@ std::string Esolve::main(std::string s, int x, const std::unordered_set<char> &n
 	return Esolve::partly(s, numbers);
 }
 
-std::string Esolve::partly(std::string s,const std::unordered_set<char> &numbers)
+std::string Esolve::partly(std::string s, const std::unordered_set<char> &numbers)
 {
 	std::vector<char> operations_av = {'^', '*', '/', '+', '-'};
 
 	for (int i = 0; i < s.size(); i++) //recursion for all the (())(())
 	{
-		if (s[i] == '(')
+		if (s[i] == '(' || s[i] == '|')
 		{
-			int until_brac = Ecore::get_ending_bracket(s, i) - i;
+
+			int until_brac = Ecore::get_ending_bracket(s, i, s[i]) - i;
 			std::string result = Esolve::partly(s.substr(i + 1, until_brac - 1), numbers);
+			if (s[i] == '|' && result[0] == '-')
+				result.erase(0, 1);
 			if (result[0] == '#')
 				return result;
 			else

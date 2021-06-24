@@ -11,7 +11,7 @@
 
 namespace Ecore
 {
-	int get_ending_bracket(const std::string &, int start);
+	int get_ending_bracket(const std::string &, int start, char type);
 	std::pair<std::pair<double, double>, std::pair<int, int>> getnumbers(const std::string &, int start, const std::unordered_set<char> &numbers);
 }
 

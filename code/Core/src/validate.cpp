@@ -41,7 +41,7 @@ bool Evalidate::brackets(const std::string &s)
 
 bool Evalidate::characters(const std::string &s)
 {
-	std::string allowed_ch = "0123456789,.()*^-+x/"; //allowed characters //later need to add %!
+	std::string allowed_ch = "0123456789,.()*^-+x/|"; //allowed characters //later need to add %!
 	std::unordered_set<char> allowed;
 	for (const char &i : allowed_ch)
 	{ //parse all allowed characters to set

@@ -1,25 +1,23 @@
 #include "../include/core.h"
 
-int Ecore::get_ending_bracket(const std::string &s, int start)
+int Ecore::get_ending_bracket(const std::string &s, int start, char type)
 {
 	unsigned long int i = start + 1;
 	int indention_level = 1;
 	while (i <= s.size())
 	{
-		switch (s[i])
-		{
-		case '(':
+		if(s[i] == '(')
 			indention_level++;
-			break;
 
-		case ')':
+		else if(s[i] == ')')
 			indention_level--;
-			break;
-		default:
-			break;
-		}
-		if (indention_level == 0)
+
+		else if(s[i] == '|')
 			return i;
+
+		if (indention_level == 0 && type == '(')
+			return i;
+
 		i++;
 	}
 	return 0;

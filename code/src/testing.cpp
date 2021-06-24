@@ -55,10 +55,10 @@ bool Etesting::bracket()
 
 	ALL_TESTS
 	{
-		if (std::to_string(Ecore::get_ending_bracket(test_cases[i].first, 1)) != test_cases[i].second)
+		if (std::to_string(Ecore::get_ending_bracket(test_cases[i].first, 1, '(')) != test_cases[i].second)
 		{
 			std::cout << "Bracket Test #" << i << " Failed! ";
-			std::cout << std::to_string(Ecore::get_ending_bracket(test_cases[i].first, 1)) << " != " << test_cases[i].second << "\n";
+			std::cout << std::to_string(Ecore::get_ending_bracket(test_cases[i].first, 1, '(')) << " != " << test_cases[i].second << "\n";
 		}
 		else
 			std::cout << "Bracket Test #" << i << " Passed! \n";
